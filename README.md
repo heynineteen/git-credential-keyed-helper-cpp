@@ -1,1 +1,1 @@
-# git-credential-keyed-helper-c-
+# git-credential-keyed-helper-cpp
