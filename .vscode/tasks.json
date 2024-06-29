@@ -1,0 +1,26 @@
+{
+    "tasks": [
+        {
+            "label": "Build C Program",
+            "type": "shell",
+            "command": "cl",
+            "args": [
+                "/EHsc",
+                "/Zi",
+                "/DDEBUG",
+                "src/main.cpp",
+                "Advapi32.lib",
+                "Kernel32.lib",
+                "User32.lib",
+                "/Fegit-credential-heynineteen-keyed.exe"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": ["$msCompile"]
+        }
+    ],
+    
+    "version": "2.0.0"
+}
