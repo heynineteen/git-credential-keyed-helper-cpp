@@ -1,4 +1,4 @@
-# heynineteen-git-credential-keyed-helper-cpp
+# git-credential-keyed-helper-cpp
 
 ## Usage scenario
 When accessing git repos over https, existing windows credential helpers e.g. `manager-core` will allow a set of credentials to be stored per domain. So if you are accessing remote repos on github.com, one set of credentials can be stored. If you need to use another set of credentials for a repo on github.com one option is to use the SSH protocol rather than https, but if you'd rather use https, this credential helper will allow you to configure multiple credentials for the same host, storing the credentials under a specific key that you provide in your configuration.
