@@ -18,7 +18,7 @@ The following steps will create a Release build of `git-credential-heynineteen-k
 - Open a Developer Command Prompt in the root directory of this repo.
 - Run the following command for a Release build:
 ```
-cl src/main.c src/utilities.c Advapi32.lib Kernel32.lib User32.lib /Fegit-credential-heynineteen-keyed.exe
+cl src/main.c Advapi32.lib Kernel32.lib User32.lib /Fegit-credential-heynineteen-keyed.exe
 ```
 - Alternatively, run `build.bat` from the root directory of this repo.
 
