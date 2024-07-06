@@ -28,7 +28,7 @@ void log_context(const GitContext& context)
         << "\tcommand: '" << context.command << "'"
         << "\thost: '" << context.host << "'"
         << "\tprotocol: '" << context.protocol << "'"
-        << "\ttarget: '" << context.target << "'"
+        << "\ttarget: '" << context.target() << "'"
         << "\tusername: '" << context.username << "'"
         << "\tpassword: '" << context.password << "'";
 

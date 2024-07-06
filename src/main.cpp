@@ -17,21 +17,21 @@ int main(int argc, char *argv[])
     LOGCONTEXT(context);
 
     if(context.command == COMMAND_GET)
-        get(&context);
+        get(context);
     else if(context.command == COMMAND_STORE)
-        store(&context);
+        store(context);
     else if(context.command == COMMAND_ERASE)
-        erase(&context);
+        erase(context);
 
     return 0;
 }
 
-void get(struct GitContext* context)
+void get(const GitContext& context)
 {
     TRACE
     PCREDENTIALW credential;
 
-    const wstring targetName = convertToWideCharacterString(context->target);
+    const wstring targetName = convertToWideCharacterString(context.target());
     BOOL result = CredReadW(const_cast<LPWSTR>(targetName.c_str()), CRED_TYPE_GENERIC, 0, &credential);
 
     // if(!result)
@@ -51,15 +51,15 @@ void get(struct GitContext* context)
     CredFree(&credential);
 }
 
-void store(struct GitContext* context)
+void store(const GitContext& context)
 {
     TRACE
-    if(context->username.empty() || context->password.empty())
+    if(context.username.empty() || context.password.empty())
         return;
 
-    auto target = convertToWideCharacterString(context->target);
-    auto username = convertToWideCharacterString(context->username);
-    auto password = convertToWideCharacterString(context->password);
+    auto target = convertToWideCharacterString(context.target());
+    auto username = convertToWideCharacterString(context.username);
+    auto password = convertToWideCharacterString(context.password);
 
     CREDENTIALW credential = {0};
     credential.TargetName = const_cast<LPWSTR>(target.c_str());
@@ -75,17 +75,17 @@ void store(struct GitContext* context)
         // handleWin32Error("CredWriteW", result);
 }
 
-void erase(struct GitContext* context)
+void erase(const GitContext& context)
 {
     TRACE
-    auto target = convertToWideCharacterString(context->target);
+    auto target = convertToWideCharacterString(context.target());
     BOOL result = CredDeleteW(target.c_str(), CRED_TYPE_GENERIC, 0);
 
     // if(!result)
     //     handleWin32Error("CredDeleteW", result);
 }
 
-wstring convertToWideCharacterString(string source)
+wstring convertToWideCharacterString(const string source)
 {
     TRACE
     wstring dest(source.size(), L' ');
@@ -97,7 +97,7 @@ GitContext parseInput(char* argv[], int argc)
 {
     TRACE
 
-    GitContext context;
+    GitContext context{argv[ARG_INDEX_KEY], argv[argc - 1]};
 
     string line;
     while(getline(cin, line))
@@ -122,12 +122,6 @@ GitContext parseInput(char* argv[], int argc)
         else if(key == "host")
             context.host = value;
     }
-
-    context.key = argv[ARG_INDEX_KEY];
-    context.command = argv[argc - 1];
-
-    if(!context.key.empty() && !context.host.empty())
-        context.target = context.key + " @ " + context.host;
 
     return context;
 }

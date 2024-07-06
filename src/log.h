@@ -15,5 +15,5 @@ void log_context(const GitContext& context);
 #define TRACE
 #define LOG(msg)
 #define LOGCONTEXT(context)
-#endif
+#endif // DEBUG
 

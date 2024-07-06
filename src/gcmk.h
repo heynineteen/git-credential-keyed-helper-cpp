@@ -4,28 +4,30 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <wincred.h>
-#include <windows.h>
 
 using namespace std;
 
-struct GitContext
+class GitContext
 {
-    string key;
-    string command;
-    string protocol;
-    string host;
-    string username;
-    string password;
-    string target;
+    public: 
+        string key;
+        string command;
+        string protocol;
+        string host;
+        string username;
+        string password;
+
+        GitContext(string key, string command);
+
+        string target() const;
 };
 
 GitContext parseInput(char*[], int);
-wstring convertToWideCharacterString(string source);
+wstring convertToWideCharacterString(const string source);
 
-void get(struct GitContext*);
-void store(struct GitContext*);
-void erase(struct GitContext*);
+void get(const GitContext&);
+void store(const GitContext&);
+void erase(const GitContext&);
 
 const char EXPECTED_ARG_COUNT = {3};
 const char ARG_INDEX_KEY = {1};
