@@ -20,7 +20,7 @@ struct GitContext
     string target;
 };
 
-void parseInput(char*[], int, struct GitContext*);
+GitContext parseInput(char*[], int);
 wstring convertToWideCharacterString(string source);
 
 void get(struct GitContext*);

@@ -2,18 +2,19 @@
 #include <wincred.h>
 #include <iostream>
 #include "gcmk.h"
+#include "log.h"
 
 using namespace std;
 int main(int argc, char *argv[])
 {
     // setlocale(LC_ALL, "");
+    LOG("args:"<< argc << " [1] " << argv[1]<< " [2] " << argv[2]);
 
     if(argc < EXPECTED_ARG_COUNT)
         return 1;
 
-    GitContext context;
-
-    parseInput(argv, argc, &context);
+    GitContext context = parseInput(argv, argc);
+    LOGCONTEXT(context);
 
     if(context.command == COMMAND_GET)
         get(&context);
@@ -27,6 +28,7 @@ int main(int argc, char *argv[])
 
 void get(struct GitContext* context)
 {
+    TRACE
     PCREDENTIALW credential;
 
     const wstring targetName = convertToWideCharacterString(context->target);
@@ -51,6 +53,7 @@ void get(struct GitContext* context)
 
 void store(struct GitContext* context)
 {
+    TRACE
     if(context->username.empty() || context->password.empty())
         return;
 
@@ -74,6 +77,7 @@ void store(struct GitContext* context)
 
 void erase(struct GitContext* context)
 {
+    TRACE
     auto target = convertToWideCharacterString(context->target);
     BOOL result = CredDeleteW(target.c_str(), CRED_TYPE_GENERIC, 0);
 
@@ -83,13 +87,18 @@ void erase(struct GitContext* context)
 
 wstring convertToWideCharacterString(string source)
 {
+    TRACE
     wstring dest(source.size(), L' ');
     mbstowcs(&dest[0], source.c_str(), source.size());
     return dest;
 }
 
-void parseInput(char* argv[], int argc, GitContext* context)
+GitContext parseInput(char* argv[], int argc)
 {
+    TRACE
+
+    GitContext context;
+
     string line;
     while(getline(cin, line))
     {
@@ -105,18 +114,20 @@ void parseInput(char* argv[], int argc, GitContext* context)
         auto value = line.substr(pos + 1);
 
         if(key == "username")
-            context->username = value;
+            context.username = value;
         else if(key == "password")
-            context->password = value;
+            context.password = value;
         else if(key == "protocol")
-            context->protocol = value;
+            context.protocol = value;
         else if(key == "host")
-            context->host = value;
+            context.host = value;
     }
 
-    context->key = argv[ARG_INDEX_KEY];
-    context->command = argv[argc - 1];
+    context.key = argv[ARG_INDEX_KEY];
+    context.command = argv[argc - 1];
 
-    if(!context->key.empty() && !context->host.empty())
-        context->target = context->key + " @ " + context->host;
+    if(!context.key.empty() && !context.host.empty())
+        context.target = context.key + " @ " + context.host;
+
+    return context;
 }
