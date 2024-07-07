@@ -1,6 +1,8 @@
 #include <windows.h>
 #include <wincred.h>
 #include <iostream>
+#include <locale>
+#include <codecvt>
 #include "gcmk.h"
 
 using namespace std;
@@ -39,14 +41,12 @@ void get(const GitContext& context)
     if(!result || credential->CredentialBlobSize == 0)
         return;
 
-    WCHAR *password = (WCHAR*)malloc(credential->CredentialBlobSize + sizeof(WCHAR));
-    memcpy(password, credential->CredentialBlob, credential->CredentialBlobSize);
-    password[credential->CredentialBlobSize / sizeof(WCHAR)] = L'\0';
+    wstring password((LPWSTR)(credential->CredentialBlob));
 
     wcout << L"username=" << credential->UserName << endl;
     wcout << L"password=" << password << endl;
 
-    free(password);
+    // free(password);
     CredFree(&credential);
 }
 

@@ -31,8 +31,6 @@ void log_context(const GitContext& context)
         << "\tusername: '" << context.username << "'"
         << "\tpassword: '" << context.password << "'";
 
-    cout << "logcontext";
-    
     OutputDebugString((LPCSTR)s.str().c_str());
 }
 #endif // DEBUG
