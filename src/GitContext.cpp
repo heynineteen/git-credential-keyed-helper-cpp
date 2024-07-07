@@ -1,4 +1,4 @@
-#include "gcmk.h"
+#include "gckh.h"
 
 GitContext::GitContext(string key, string command) : key{key}, command{command}
 {

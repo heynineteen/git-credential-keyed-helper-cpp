@@ -1,5 +1,5 @@
-#ifndef _INC_GCMK
-#define _INC_GCMK
+#ifndef _INC_GCKH
+#define _INC_GCKH
 
 #include <iostream>
 #include <string>
@@ -55,4 +55,4 @@ void log_context(const GitContext& context);
 
 void handleWin32Error(string file, string func, int line, string win32Function, int error);
 
-#endif // _INC_GCMK
+#endif // _INC_GCKH

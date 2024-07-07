@@ -8,7 +8,7 @@
             "name": "Debug C Program",
             "type": "cppvsdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/git-credential-heynineteen-keyed.exe",
+            "program": "${workspaceFolder}/git-credential-keyed-helper.exe",
             "args": ["heynineteen", "get"],
             "stopAtEntry": true,
             "cwd": "${workspaceFolder}",

@@ -14,7 +14,7 @@ When accessing git repos over https, existing windows credential helpers e.g. `m
 - Developer Command Prompt for Visual Studio 20XX (installed as part of Visual Studio).
 
 ### Build the executable
-The following steps will create a Release build of `git-credential-heynineteen-keyed.exe`:
+The following steps will create a Release build of `git-credential-keyed-helper.exe`:
 - Open a Developer Command Prompt in the root directory of this repo.
 - Run the following command for a Release build:
 ```
@@ -37,11 +37,11 @@ Create new `.gitconfig` file which will include your specific user information a
 
 [credential]
     helper = 
-    helper = heynineteen-keyed heynineteen
+    helper = keyed-helper heynineteen
 ```
-Unlike other git config items, a value for `credential.helper` will not replace values in any parent config files but add another helper to the list. The helpers in this list get called in turn until one provides some credentials. To avoid this and replace helpers specified in parent configs, we first include a blank helper (` helper = `) followed by the the configuration for our overriding helper (`helper = heynineteen-keyed heynineteen`).
+Unlike other git config items, a value for `credential.helper` will not replace values in any parent config files but add another helper to the list. The helpers in this list get called in turn until one provides some credentials. To avoid this and replace helpers specified in parent configs, we first include a blank helper (` helper = `) followed by the the configuration for our overriding helper (`helper = keyed-helper heynineteen`).
 
-This configuration sets the credential helper to be an executable named `git-credential-heynineteen-simple` and passes an argument of `heynineteen`. This argument is an arbitrary key value used along with the remote git host to distiguish between different accounts and allows multiple accounts to be configured on the same machine.
+This configuration sets the credential helper to be an executable named `git-credential-keyed-helper` and passes an argument of `heynineteen`. This argument is an arbitrary key value used along with the remote git host to distiguish between different accounts and allows multiple accounts to be configured on the same machine.
 
 ### Update your user .gitconfig file
 Add this entry to your system or user .git config file:
@@ -52,7 +52,7 @@ Add this entry to your system or user .git config file:
 This entry means the content of `C:/my-repos/heynineteen/.gitconfig` will be included in the git conguration when the current folder is or is a child folder of `C:/my-repos/heynineteen/`.
 
 ## Using the credential helper
-Attempting to access the remote git repo will result in git asking the helper for credentials. The helper will attempt to retrieve the credentials Windows Credential Manager using the key built from the argument in the `credntial.helper` section of the .gitconfig file and the host of the remote repo e.g.`heynineteen @ github.com`. If the credentials cannot be found, the user is prompted for the username and password. Since the use of passwords has been deprecated in this situation, you need to provide a personal access token when prompted for the password. The credential helper will then store the credential in Windows Credential Manager.
+Attempting to access the remote git repo will result in git asking the helper for credentials. The helper will attempt to retrieve the credentials Windows Credential Manager using the key built from the argument in the `credential.helper` section of the .gitconfig file and the host of the remote repo e.g.`heynineteen @ github.com`. If the credentials cannot be found, the user is prompted for the username and password. Since the use of passwords has been deprecated in this situation, you need to provide a personal access token when prompted for the password. The credential helper will then store the credential in Windows Credential Manager.
 
 ## Debugging
 - Ensure all steps in the [prerequisites](#prerequisites) have been followed.
