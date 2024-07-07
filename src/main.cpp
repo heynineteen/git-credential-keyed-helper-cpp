@@ -46,7 +46,6 @@ void get(const GitContext& context)
     wcout << L"username=" << credential->UserName << endl;
     wcout << L"password=" << password << endl;
 
-    // free(password);
     CredFree(&credential);
 }
 
