@@ -41,13 +41,14 @@ void get(const GitContext& context)
     if(!result || credential->CredentialBlobSize == 0)
         return;
 
-    wstring password((LPWSTR)(credential->CredentialBlob));
+    wstring password(credential->CredentialBlobSize / 2, L'\0');
+    memcpy(&password[0], credential->CredentialBlob, credential->CredentialBlobSize);
 
     wcout << L"username=" << credential->UserName << endl;
     wcout << L"password=" << password << endl;
 
     CredFree(&credential);
-}
+ }
 
 void store(const GitContext& context)
 {

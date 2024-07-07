@@ -5,10 +5,13 @@
 using std::string;
 
 #ifdef DEBUG
+static const string Tag = "GCKH_";
+
 void debug_printer(string type, string fn, string func, int line, string msg) {
     std::ostringstream s;
 
-    s   << type << ": "
+    s   << Tag
+        << type << ": "
         << fn << "(" << line << "): "
         << func;
         if (msg.size()) {
@@ -23,7 +26,9 @@ void log_context(const GitContext& context)
 {
     std::ostringstream s;
 
-    s   << "key: '" << context.key << "'"
+    s   << Tag
+        << "CONTEXT: "
+        << "key: '" << context.key << "'"
         << "\tcommand: '" << context.command << "'"
         << "\thost: '" << context.host << "'"
         << "\tprotocol: '" << context.protocol << "'"
