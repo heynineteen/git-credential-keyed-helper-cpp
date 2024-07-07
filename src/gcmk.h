@@ -4,8 +4,10 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <sstream>
 
 using namespace std;
+using std::string;
 
 class GitContext
 {
@@ -35,5 +37,18 @@ const string INPUT_LINE_DELIMITER = {"="};
 const string COMMAND_GET =  {"get"};
 const string COMMAND_STORE = {"store"};
 const string COMMAND_ERASE = {"erase"};
+
+#ifdef DEBUG
+#define TRACE debug_printer("TRACE", __FILE__, __func__, __LINE__ , string());
+#define LOG(msg) {std::ostringstream _s; _s << msg; debug_printer("LOG", __FILE__, __func__, __LINE__ , _s.str());}
+#define LOGCONTEXT(context) log_context(context);
+
+void debug_printer(string type, string fn, string func, int line, string msg);
+void log_context(const GitContext& context);
+#else
+#define TRACE
+#define LOG(msg)
+#define LOGCONTEXT(context)
+#endif // DEBUG
 
 #endif // _INC_GCMK

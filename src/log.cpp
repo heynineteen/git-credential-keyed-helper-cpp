@@ -1,7 +1,6 @@
-#include <iostream>
 #include <sstream>
 #include <windows.h>
-#include "log.h"
+#include "gcmk.h"
 
 using std::string;
 

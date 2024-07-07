@@ -2,7 +2,6 @@
 #include <wincred.h>
 #include <iostream>
 #include "gcmk.h"
-#include "log.h"
 
 using namespace std;
 int main(int argc, char *argv[])
