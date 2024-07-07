@@ -49,6 +49,10 @@ void log_context(const GitContext& context);
 #define TRACE
 #define LOG(msg)
 #define LOGCONTEXT(context)
-#endif // DEBUG
+#endif // _INC_DEBUG
+
+#define HANDLE_WIN32_ERROR(win32Function, error) handleWin32Error(__FILE__, __func__, __LINE__, win32Function, error);
+
+void handleWin32Error(string file, string func, int line, string win32Function, int error);
 
 #endif // _INC_GCMK

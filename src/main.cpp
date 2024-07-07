@@ -35,8 +35,8 @@ void get(const GitContext& context)
     const wstring targetName = convertToWideCharacterString(context.target());
     BOOL result = CredReadW(const_cast<LPWSTR>(targetName.c_str()), CRED_TYPE_GENERIC, 0, &credential);
 
-    // if(!result)
-    //     handleWin32Error("CredReadW", result);
+    if(!result)
+        HANDLE_WIN32_ERROR("CredReadW", GetLastError());
 
     if(!result || credential->CredentialBlobSize == 0)
         return;
@@ -69,8 +69,8 @@ void store(const GitContext& context)
 
     BOOL result = CredWriteW(&credential, 0);
 
-    // if(!result)
-        // handleWin32Error("CredWriteW", result);
+    if(!result)
+        HANDLE_WIN32_ERROR("CredWriteW", GetLastError());
 }
 
 void erase(const GitContext& context)
@@ -79,8 +79,8 @@ void erase(const GitContext& context)
     auto target = convertToWideCharacterString(context.target());
     BOOL result = CredDeleteW(target.c_str(), CRED_TYPE_GENERIC, 0);
 
-    // if(!result)
-    //     handleWin32Error("CredDeleteW", result);
+    if(!result)
+        HANDLE_WIN32_ERROR("CredDeleteW", GetLastError());
 }
 
 wstring convertToWideCharacterString(const string source)
