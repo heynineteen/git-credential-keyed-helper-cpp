@@ -18,7 +18,7 @@ The following steps will create a Release build of `git-credential-keyed-helper.
 - Open a Developer Command Prompt in the root directory of this repo.
 - Run the following command for a Release build:
 ```
-cl src/main.c Advapi32.lib Kernel32.lib User32.lib /Fegit-credential-heynineteen-keyed.exe
+cl /std:c++17 src/main.cpp src/log.cpp src/GitContext.cpp src/error.cpp Advapi32.lib Kernel32.lib User32.lib /EHsc /Fegit-credential-keyed-helper.exe
 ```
 - Alternatively, run `build.bat` from the root directory of this repo.
 
