@@ -1,0 +1,34 @@
+name: Build and publish C++ with cl.exe
+
+on:
+  push:
+    tags:
+      - "*"
+
+jobs:
+  build:
+    runs-on: windows-latest
+    permissions:
+      contents: write
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+      # https://github.com/marketplace/actions/enable-developer-command-prompt
+    - name: Set up C/C++ tooling
+      uses: ilammy/msvc-dev-cmd@v1
+
+    - name: Build with cl.exe
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: |
+        ./build.bat
+        mkdir bin
+        mv *exe .\bin
+        del *obj
+
+      # https://github.com/marketplace/actions/create-release
+    - name: Create release
+      uses: ncipollo/release-action@v1
+      with:
+        artifacts: "bin/*"
