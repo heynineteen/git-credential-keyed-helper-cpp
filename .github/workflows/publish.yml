@@ -6,7 +6,7 @@ on:
       - "*"
 
 jobs:
-  build:
+  publish:
     runs-on: windows-latest
     permissions:
       contents: write
@@ -19,16 +19,25 @@ jobs:
     - name: Set up C/C++ tooling
       uses: ilammy/msvc-dev-cmd@v1
 
-    - name: Build with cl.exe
+    - name: Create output folder
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run : mkdir bin
+
+    - name: Build with cl.exe - release
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: |
         ./build.bat
-        mkdir bin
-        mv *exe .\bin
-        del *obj
+        mv git-credential-keyed-helper.exe .\bin
+
+    - name: Build with cl.exe - debug
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: |
+        ./build-debug.bat
+        mv git-credential-keyed-helper.exe .\bin\git-credential-keyed-helper-debug.exe
 
       # https://github.com/marketplace/actions/create-release
     - name: Create release
+      id: create-release
       uses: ncipollo/release-action@v1
       with:
         artifacts: "bin/*"
