@@ -31,7 +31,7 @@ cl /std:c++17 /DDEBUG src/main.cpp src/log.cpp src/GitContext.cpp src/error.cpp 
 - Alternatively, run `build-debug.bat` from the root directory of this repo.
 
 ### Download an existing release
-Release are available [here](/releases).
+Release are available [here](releases).
 - Navigate to the latest release.
 - Release build is named `git-credential-keyed-helper.exe`.
 - Debug build is named `git-credential-keyed-helper-debug.exe`. Rename this to `git-credential-keyed-helper.exe` before copying.
