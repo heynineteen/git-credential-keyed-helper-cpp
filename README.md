@@ -7,20 +7,37 @@ When accessing git repos over https, existing windows credential helpers e.g. `m
 [Git documentation of credential storage](https://git-scm.com/book/en/v2/Git-Tools-Credential-Storage)
 
 ## Installation instructions
-### Prerequisites
+The executable can either be built from the source code or downloaded from an existing release.
+
+### Building from source
+#### Prerequisites
  To build or debug this project the following are required:
 - Windows SDK. This is most easily done by installing C and C++ support in Visual Studio 20XX. Instructions [here](https://learn.microsoft.com/en-us/cpp/build/vscpp-step-0-installation?view=msvc-170).
 - Visual Studio Code. This has been the IDE used for this project and is required to follow the debugging instructions.
 - Developer Command Prompt for Visual Studio 20XX (installed as part of Visual Studio).
 
-### Build the executable
-The following steps will create a Release build of `git-credential-keyed-helper.exe`:
+#### Compilation
+The following steps will create a build of `git-credential-keyed-helper.exe`:
 - Open a Developer Command Prompt in the root directory of this repo.
 - Run the following command for a Release build:
 ```
 cl /std:c++17 src/main.cpp src/log.cpp src/GitContext.cpp src/error.cpp Advapi32.lib Kernel32.lib User32.lib /EHsc /Fegit-credential-keyed-helper.exe
 ```
 - Alternatively, run `build.bat` from the root directory of this repo.
+- Run the following command for a Debug build:
+```
+cl /std:c++17 /DDEBUG src/main.cpp src/log.cpp src/GitContext.cpp src/error.cpp Advapi32.lib Kernel32.lib User32.lib /EHsc /Fegit-credential-keyed-helper.exe
+```
+- Alternatively, run `build-debug.bat` from the root directory of this repo.
+
+### Download an existing release
+Release are available [here](./releases).
+- Navigate to the latest release.
+- Release build is named `git-credential-keyed-helper.exe`.
+- Debug build is named `git-credential-keyed-helper-debug.exe`. Rename this to `git-credential-keyed-helper.exe` before copying.
+
+### Running a debug build
+Running the debug version of the executable will enable the logging of debug information to the system. This can be viewed in a tool such as [DebugView](https://learn.microsoft.com/en-us/sysinternals/downloads/debugview). This may output sensitive data to ensure to delete if you have configured this to be persisted to a file.
 
 ### Copy the executable
 Copy the executable to the location on your hard-drive where your other credential helpers are located. In a typical Git for Windows intallation this will be `C:\Program Files\Git\mingw64\libexec\git-core`.
@@ -54,9 +71,9 @@ This entry means the content of `C:/my-repos/heynineteen/.gitconfig` will be inc
 ## Using the credential helper
 Attempting to access the remote git repo will result in git asking the helper for credentials. The helper will attempt to retrieve the credentials Windows Credential Manager using the key built from the argument in the `credential.helper` section of the .gitconfig file and the host of the remote repo e.g.`heynineteen @ github.com`. If the credentials cannot be found, the user is prompted for the username and password. Since the use of passwords has been deprecated in this situation, you need to provide a personal access token when prompted for the password. The credential helper will then store the credential in Windows Credential Manager.
 
-## Debugging
+## Debuging in Visual Studio Code
 - Ensure all steps in the [prerequisites](#prerequisites) have been followed.
-- Ensure this project is opend in Visual Studio Code from the command line of the Developer Command Prompt. This runs a script that sets up the paths and environment variables necessary to access the C/C++ binaries and tools.
+- Ensure this project is opened in Visual Studio Code from the command line of the Developer Command Prompt. This runs a script that sets up the paths and environment variables necessary to access the C/C++ binaries and tools.
 - Set breakpoints.
 - Click the `Run and Debug` button on the sidebar.
 - Select `Debug C Program` from the drop down.
