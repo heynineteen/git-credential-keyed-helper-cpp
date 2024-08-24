@@ -26,7 +26,7 @@ cl /std:c++17 src/main.cpp src/log.cpp src/GitContext.cpp src/error.cpp Advapi32
 - Alternatively, run `build.bat` from the root directory of this repo.
 - Run the following command for a Debug build:
 ```
-cl /std:c++17 /DDEBUG src/main.cpp src/log.cpp src/GitContext.cpp src/error.cpp Advapi32.lib Kernel32.lib User32.lib /EHsc /Fegit-credential-keyed-helper.exe
+cl /std:c++17 /DDEBUG /Zi src/main.cpp src/log.cpp src/GitContext.cpp src/error.cpp Advapi32.lib Kernel32.lib User32.lib /EHsc /Fegit-credential-keyed-helper.exe
 ```
 - Alternatively, run `build-debug.bat` from the root directory of this repo.
 
@@ -77,4 +77,4 @@ Attempting to access the remote git repo will result in git asking the helper fo
 - Set breakpoints.
 - Click the `Run and Debug` button on the sidebar.
 - Select `Debug C Program` from the drop down.
-- Click `Start Debugging` for press F5.
+- Click `Start Debugging` or press F5.

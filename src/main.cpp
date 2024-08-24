@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
     else if(context.command == COMMAND_STORE)
         store(context);
     else if(context.command == COMMAND_ERASE)
-        erase(context);
+        erase(context); 
 
     return 0;
 }
@@ -41,8 +41,7 @@ void get(const GitContext& context)
     if(!result || credential->CredentialBlobSize == 0)
         return;
 
-    wstring password(credential->CredentialBlobSize / 2, L'\0');
-    memcpy(&password[0], credential->CredentialBlob, credential->CredentialBlobSize);
+    wstring password(reinterpret_cast<wchar_t*>(credential->CredentialBlob), credential->CredentialBlobSize / sizeof(wchar_t));
 
     wcout << L"username=" << credential->UserName << endl;
     wcout << L"password=" << password << endl;

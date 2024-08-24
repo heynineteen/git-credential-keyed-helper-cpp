@@ -9,7 +9,7 @@
             "type": "cppvsdbg",
             "request": "launch",
             "program": "${workspaceFolder}/git-credential-keyed-helper.exe",
-            "args": ["heynineteen", "get"],
+            "args": ["heynineteen", "erase"],
             "stopAtEntry": true,
             "cwd": "${workspaceFolder}",
             "environment": [],
